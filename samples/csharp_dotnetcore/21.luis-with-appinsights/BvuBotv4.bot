@@ -1,0 +1,45 @@
+{
+    "name": "BvuBotv4",
+    "description": "",
+    "services": [
+        {
+            "type": "endpoint",
+            "name": "development",
+            "endpoint": "http://localhost:3978/api/messages",
+            "appId": "",
+            "appPassword": "",
+            "id": "162"
+        },
+        {
+            "type": "endpoint",
+            "name": "production",
+            "endpoint": "http://localhost:3978/api/messages",
+            "appId": "",
+            "appPassword": "",
+            "id": "163"
+        },
+        {
+            "type": "appInsights",
+            "name": "appinsightsService",
+            "tenantId": "621248c4-8599-475c-a0a0-6128a6d3f4f0",
+            "subscriptionId": "c06020db-7773-408d-8d91-57eb26081e23",
+            "resourceGroup": "bvu-bot-v4-dev",
+            "serviceName": "appinsightsService",
+            "instrumentationKey": "pWUybHx7vZs8PeuT/YQa+A==!UJIqf/HJppXB7ena0jw+iG23gW2UawH9YnGyvKYwwyDVUwnnuRgR9nxgs39K875k",
+            "apiKeys": {},
+            "id": "69"
+        },
+        {
+            "type": "luis",
+            "name": "luisService",
+            "appId": "71dc03fd-adc6-4ecc-a55b-5c8cce2d2500",
+            "version": "0.1",
+            "authoringKey": "nhKjgnlX0V3NdCNEm1/iIw==!+3X4iATyotQj0O44Rvw69r8JcEKlGi6x2+pGuAvYn6/xEX/zWP1x054Cc0ZOjYmP",
+            "subscriptionKey": "D3iXuyFJcundJjvvgFP8hQ==!dHd2dU6bWdRy/5F3E7QaZoyZ82Svd82cSVKMLbAN+LsetgucV7YpR5DqYuUnm95W",
+            "region": "westeurope",
+            "id": "165"
+        }
+    ],
+    "padlock": "BWYSjyWSjeeoegggyc1yEQ==!JdLXy3pS3R+J1soXjRxWuD2VwLazJ+plrnyn9BmxBVlp9rD0JCy7p/rwiR62DIgW",
+    "version": "2.0"
+}
