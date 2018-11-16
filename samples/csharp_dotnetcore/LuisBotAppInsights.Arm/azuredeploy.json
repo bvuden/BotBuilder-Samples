@@ -1,0 +1,190 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "hostingPlanName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "skuName": {
+      "type": "string",
+      "defaultValue": "F1",
+      "allowedValues": [
+        "F1",
+        "D1",
+        "B1",
+        "B2",
+        "B3",
+        "S1",
+        "S2",
+        "S3",
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ]
+    },
+    "skuCapacity": {
+      "type": "int",
+      "defaultValue": 1,
+      "minValue": 1
+    },
+    "webAppName": {
+      "type": "string",
+      "defaultValue": "bvubotv4"
+    },
+    "botFileSecret": {
+      "type": "string"
+    },
+    "botFilePath": {
+      "type": "string"
+    },
+    "appInsightsName": {
+      "type": "string",
+      "defaultValue": "bvubotv4appinsights"
+    },
+    "msaAppId": {
+      "type": "string",
+      "defaultValue": "MsaAppId"
+    },
+    "botServiceSkuName": {
+      "type": "string",
+      "defaultValue": "F0",
+      "allowedValues": [
+        "F0",
+        "S1"
+      ]
+    },
+    "luisName": {
+      "type": "string",
+      "defaultValue": "bvubotv4luis"
+    },
+    "luisSkuName": {
+      "type": "string",
+      "defaultValue": "F0",
+      "allowedValues": [
+        "F0",
+        "S0"
+      ]
+    }
+  },
+  "variables": {
+    "siteHost": "[concat(parameters('webAppName'), '.azurewebsites.net')]",
+    "botEndpoint": "[concat('https://', variables('siteHost'), '/api/messages')]",
+    "luisId": "[concat(resourceGroup().id,'/providers/','Microsoft.CognitiveServices/accounts/', parameters('luisName'))]"
+  },
+  "resources": [
+    {
+      "apiVersion": "2015-08-01",
+      "name": "[parameters('hostingPlanName')]",
+      "type": "Microsoft.Web/serverfarms",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "[parameters('skuName')]",
+        "capacity": "[parameters('skuCapacity')]"
+      },
+      "properties": {
+        "name": "[parameters('hostingPlanName')]"
+      }
+    },
+    {
+      "apiVersion": "2015-08-01",
+      "name": "[parameters('webAppName')]",
+      "type": "Microsoft.Web/sites",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
+      ],
+      "properties": {
+        "name": "[parameters('webAppName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
+        "siteConfig": {
+          "appSettings": [
+            {
+              "name": "botFileSecret",
+              "value": "[parameters('botFileSecret')]"
+            },
+            {
+              "name": "botFilePath",
+              "value": "[parameters('botFilePath')]"
+            },
+            {
+              "name": "WEBSITE_NODE_DEFAULT_VERSION",
+              "value": "8.9.4"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "apiVersion": "2014-04-01",
+      "name": "[parameters('appInsightsName')]",
+      "type": "Microsoft.Insights/components",
+      "kind": "web",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites/', parameters('webAppName'))]"
+      ],
+      "properties": {
+        "applicationId": "[parameters('webAppName')]"
+      }
+    },
+    {
+      "apiVersion": "2017-12-01",
+      "type": "Microsoft.BotService/botServices",
+      "name": "[parameters('webAppName')]",
+      "location": "global",
+      "kind": "sdk",
+      "sku": {
+        "name": "[parameters('botServiceSkuName')]"
+      },
+      "properties": {
+        "name": "[parameters('webAppName')]",
+        "displayName": "[parameters('webAppName')]",
+        "endpoint": "[variables('botEndpoint')]",
+        "msaAppId": "[parameters('msaAppId')]",
+        "developerAppInsightsApplicationId": "[parameters('appInsightsName')]",
+        "developerAppInsightKey": "[reference(resourceId('microsoft.insights/components/', parameters('insightsName')), '2015-05-01').InstrumentationKey]",
+        "allSettings": {
+          "botFileSecret": "[parameters('botFileSecret')]"
+        }
+      },
+      "dependsOn": [
+        "[resourceId('microsoft.insights/components/', parameters('appInsightsName'))]"
+      ]
+    },
+    {
+      "apiVersion": "2017-04-18",
+      "type": "Microsoft.CognitiveServices/accounts",
+      "name": "[parameters('luisName')]",
+      "location": "[resourceGroup().location]",
+      "kind": "LUIS",
+      "sku": {
+        "name": "[parameters('luisSkuName')]"
+      },
+      "properties": {}
+    }
+  ],
+  "outputs": {
+    "webAppName": {
+      "type": "string",
+      "value": "[parameters('webAppName')]"
+    },
+    "luisKey1": {
+      "type": "string",
+      "value": "[listKeys(variables('luisId'),'2016-02-01-preview').key1]"
+    },
+    "botEndpoint": {
+      "type": "string",
+      "value": "[variables('botEndpoint')]"
+    },
+    "appInsightsInstrumentationKey": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Insights/components', parameters('appInsightsName')), '2014-04-01').InstrumentationKey]"
+    },
+    "msaAppId": {
+      "type": "string",
+      "value": "[parameters('msaAppId')]"
+    }
+  }
+}
