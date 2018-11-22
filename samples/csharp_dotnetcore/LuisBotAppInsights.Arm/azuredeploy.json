@@ -142,12 +142,12 @@
         "name": "[parameters('webAppName')]",
         "displayName": "[parameters('webAppName')]",
         "endpoint": "[variables('botEndpoint')]",
-        "msaAppId": "[parameters('msaAppId')]",
-        "developerAppInsightsApplicationId": "[parameters('appInsightsName')]",
-        "developerAppInsightKey": "[reference(resourceId('microsoft.insights/components/', parameters('appInsightsName')), '2015-05-01').InstrumentationKey]",
-        "allSettings": {
-          "botFileSecret": "[parameters('botFileSecret')]"
-        }
+        "msaAppId": "[parameters('msaAppId')]"
+        //"developerAppInsightsApplicationId": "[parameters('appInsightsName')]",
+        //"developerAppInsightKey": "[reference(resourceId('microsoft.insights/components/', parameters('appInsightsName')), '2015-05-01').InstrumentationKey]",
+        //"allSettings": {
+        //  "botFileSecret": "[parameters('botFileSecret')]"
+        //}
       },
       "dependsOn": [
         "[resourceId('microsoft.insights/components/', parameters('appInsightsName'))]"
