@@ -40,13 +40,12 @@
     "botFilePath": {
       "type": "string"
     },
+    "msaAppId": {
+      "type": "string"
+    },
     "appInsightsName": {
       "type": "string",
       "defaultValue": "bvubotv4appinsights"
-    },
-    "msaAppId": {
-      "type": "string",
-      "defaultValue": "MsaAppId"
     },
     "botServiceSkuName": {
       "type": "string",
