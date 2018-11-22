@@ -144,7 +144,7 @@
         "endpoint": "[variables('botEndpoint')]",
         "msaAppId": "[parameters('msaAppId')]",
         "developerAppInsightsApplicationId": "[parameters('appInsightsName')]",
-        "developerAppInsightKey": "[reference(resourceId('microsoft.insights/components/', parameters('appInsightsName')), '2015-05-01').InstrumentationKey]",
+        "developerAppInsightKey": "[reference(resourceId('microsoft.insights/components/', parameters('appInsightsName')), '2015-05-01').InstrumentationKey]"
       },
       "dependsOn": [
         "[resourceId('microsoft.insights/components/', parameters('appInsightsName'))]"
