@@ -145,7 +145,7 @@
         "endpoint": "[variables('botEndpoint')]",
         "msaAppId": "[parameters('msaAppId')]",
         "developerAppInsightsApplicationId": "[parameters('appInsightsName')]",
-        "developerAppInsightKey": "[reference(resourceId('microsoft.insights/components/', parameters('insightsName')), '2015-05-01').InstrumentationKey]",
+        "developerAppInsightKey": "[reference(resourceId('microsoft.insights/components/', parameters('appInsightsName')), '2015-05-01').InstrumentationKey]",
         "allSettings": {
           "botFileSecret": "[parameters('botFileSecret')]"
         }
