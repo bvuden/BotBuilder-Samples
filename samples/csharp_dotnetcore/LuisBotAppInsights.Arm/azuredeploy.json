@@ -4,6 +4,7 @@
   "parameters": {
     "hostingPlanName": {
       "type": "string",
+      "defaultValue": "bvubotv4hostingplan",
       "minLength": 1
     },
     "skuName": {
