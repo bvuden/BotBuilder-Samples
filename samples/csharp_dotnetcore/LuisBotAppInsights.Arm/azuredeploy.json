@@ -178,10 +178,10 @@
     "appInsightsInstrumentationKey": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.Insights/components', parameters('appInsightsName')), '2014-04-01').InstrumentationKey]"
-    },
-    "msaAppId": {
-      "type": "string",
-      "value": "[parameters('msaAppId')]"
     }
+    //"msaAppId": {
+    //  "type": "string",
+    //  "value": "[parameters('msaAppId')]"
+    //}
   }
 }
