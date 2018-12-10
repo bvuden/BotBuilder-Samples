@@ -86,7 +86,8 @@ namespace Microsoft.BotBuilderSamples
                 // Catches any errors that occur during a conversation turn and logs them.
                 options.OnTurnError = async (context, exception) =>
                 {
-                    logger.LogError($"Exception caught : {exception}");
+                    connectedServices.TelemetryClient.TrackException(exception);
+                    //logger.LogError($"Exception caught : {exception}");
                     await context.SendActivityAsync("Sorry, it looks like something went wrong.");
                 };
 
